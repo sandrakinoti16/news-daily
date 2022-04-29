@@ -13,6 +13,7 @@ def home():
     all_articles = newsapi.get_everything(sources = "bbc-news")
 
     t_articles = top_headlines['articles']
+    a_articles = all_articles['articles']
 
     news = []
     desc = []
@@ -32,6 +33,15 @@ def home():
         time.append(main_article['time'])
 
         contents = zip( news,desc,img,p_date,url)
+
+        news_all = []
+        desc_all = []
+        img_all = []
+        p_date_all = []   
+        url_all = []
+
+    all = zip( news_all,desc_all,img_all,p_date_all,url_all)
+        
 
     return render_template('home.html',contents=contents,all = all)
 
