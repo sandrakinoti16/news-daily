@@ -30,6 +30,8 @@ def home():
         url.append(main_article['url'])
         time.append(main_article['time'])
 
+        contents = zip( news,desc,img,p_date,url)
+
     return render_template('home.html')
 
 if __name__ == '__main__':
