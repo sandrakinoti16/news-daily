@@ -1,7 +1,5 @@
 from ast import Return
 from flask import Flask,render_template
-from app import app
-
 
 app = Flask(__name__)
 def home():
