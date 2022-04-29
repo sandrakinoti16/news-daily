@@ -32,7 +32,7 @@ def home():
 
         contents = zip( news,desc,img,p_date,url)
 
-    return render_template('home.html')
+    return render_template('home.html',contents=contents,all = all)
 
 if __name__ == '__main__':
        
