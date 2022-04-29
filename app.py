@@ -40,6 +40,16 @@ def home():
         p_date_all = []   
         url_all = []
 
+        for j in range(len(a_articles)): 
+         main_all_articles = a_articles[j]   
+
+        news_all.append(main_all_articles['title'])
+        desc_all.append(main_all_articles['description'])
+        img_all.append(main_all_articles['urlToImage'])
+        p_date_all.append(main_all_articles['publishedAt'])
+        url_all.append(main_article['url'])
+        
+
     all = zip( news_all,desc_all,img_all,p_date_all,url_all)
         
 
