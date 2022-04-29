@@ -10,6 +10,8 @@ def home():
 
     top_headlines = newsapi.get_top_headlines(sources = "bbc-news")
 
+    t_articles = top_headlines['articles']
+
     return render_template('home.html')
 
 if __name__ == '__main__':
