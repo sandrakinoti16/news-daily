@@ -1,4 +1,5 @@
 from ast import Return
+from time import time
 from flask import Flask,render_template
 
 from newsapi import NewsApiClient
@@ -12,6 +13,12 @@ def home():
 
     t_articles = top_headlines['articles']
 
+    news = []
+    desc = []
+    img = []
+    p_date = []
+    url = []
+    time = []
     return render_template('home.html')
 
 if __name__ == '__main__':
