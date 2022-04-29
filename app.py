@@ -19,6 +19,10 @@ def home():
     p_date = []
     url = []
     time = []
+
+    for i in range (len(t_articles)):
+        main_article = t_articles[i]
+
     return render_template('home.html')
 
 if __name__ == '__main__':
