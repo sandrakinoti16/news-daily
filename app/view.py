@@ -12,5 +12,5 @@ def home():
 
 @app.route('/news')
 def news():
-            
-    return render_template('news.html')
+    news_article = home()
+    return render_template('news.html',news_article= news_article)
