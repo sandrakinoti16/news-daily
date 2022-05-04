@@ -5,7 +5,7 @@ from flask import Flask,render_template
 
 from newsapi import NewsApiClient
 
-app = Flask(__name__)
+
 def home():
 
     newsapi = NewsApiClient(api_key='760f167336c24d789133ed6ce44e2dcd')
@@ -56,6 +56,3 @@ def home():
 
     return render_template('home.html','news.html',contents=contents,all = all,)
 
-if __name__ == '__main__':
-       
- app.run(debug=True)
