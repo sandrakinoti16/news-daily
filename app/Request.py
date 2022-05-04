@@ -1,9 +1,6 @@
 from ast import Return
 from time import time
 from flask import Flask,render_template
-from app import app
-# Getting api key
-api_key = app.config['NEWS_API_KEY']
 
 from newsapi import NewsApiClient
 
