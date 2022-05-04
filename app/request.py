@@ -11,17 +11,19 @@ def get_news():
     '''
     Function that gets the json response to our url request
     '''
-    get_news_url = base_articles_url.format(api_key)
+    # get_news_url = base_articles_url.format(api_key)
+    get_news_url='https://newsapi.org/v2/top-headlines?country=us&apiKey=760f167336c24d789133ed6ce44e2dcd'
 
     with urllib.request.urlopen(get_news_url) as url:
         get_news_data = url.read()
         get_news_response = json.loads(get_news_data)
-
+        
         news_results = None
 
-        if get_news_response['results']:
-            news_results_list = get_news_response['results']
+        if get_news_response['articles']:
+            news_results_list = get_news_response['articles']
             news_results = process_results(news_results_list)
+    print(news_results)
     return news_results
             
 def process_results(news_list):
