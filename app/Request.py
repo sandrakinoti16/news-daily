@@ -1,5 +1,9 @@
 from flask import Flask,render_template
 from newsapi import NewsApiClient
+from app import app
+
+# Getting api key
+api_key = app.config['NEWS_API_KEY']
 
 app = Flask(__name__)
 
