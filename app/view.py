@@ -14,3 +14,5 @@ def home():
 def news():
     news_article = home()
     return render_template('news.html',news_article= news_article)
+
+  
