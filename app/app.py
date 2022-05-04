@@ -53,7 +53,7 @@ def home():
     all = zip( news_all,desc_all,img_all,p_date_all,url_all)
         
 
-    return render_template('home.html',contents=contents,all = all)
+    return render_template('home.html','news.html',contents=contents,all = all,)
 
 if __name__ == '__main__':
        
