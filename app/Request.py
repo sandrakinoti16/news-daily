@@ -1,78 +1,56 @@
-from app import app
-import urllib.request,json
-from .models import Articles, Sources
-#Getting api key
-api_key = app.config[‘NEWS_API_KEY’]
-#Getting article base url
-base_articles_url = app.config[“ARTICLES_BASE_URL”]
-base_sources_url = app.config[“SOURCES_BASE_URL”]
-def get_articles():
-    ‘’'
-    Function that gets the json response to our url request
-    ‘’'
-    get_articles_url = base_articles_url.format(api_key)
-    with urllib.request.urlopen(get_articles_url) as url:
-        get_articles_data = url.read()
-        get_articles_reaponse = json.loads(get_articles_data)
-        news_articles = None
-        if get_articles_reaponse[‘articles’]:
-            news_articles_list = get_articles_reaponse[‘articles’]
-            news_articles = process_articles(news_articles_list)
-    return news_articles
-def process_articles(articles_list):
-    ‘’'
-    Function that processes the news articles and transform them into a list of objects
-    ‘’'
-    news_articles = []
-    for article_item in articles_list:
-        author = article_item.get(‘author’)
-        title = article_item.get(‘title’)
-        description = article_item.get(‘description’)
-        url = article_item.get(‘url’)
-        urltoImage = article_item.get(‘urlToImage’)
-        publishedAt = article_item.get(‘publishedAt’)
-        content = article_item.get(‘content’)
-        if urltoImage:
-            article_object = Articles(author,title,description,url,urltoImage,publishedAt,content)
-            news_articles.append(article_object)
-    return news_articles
-def get_sources():
-    ‘’'
-    Function that gets the json response to our url request
-    ‘’'
-    get_sources_url = base_sources_url.format(api_key)
-    with urllib.request.urlopen(get_sources_url) as url:
-        get_sources_data = url.read()
-        get_sources_reaponse = json.loads(get_sources_data)
-        news_sources = None
-        if get_sources_reaponse[‘sources’]:
-            news_sources_list = get_sources_reaponse[‘sources’]
-            news_sources = process_sources(news_sources_list)
-    return news_sources
-def process_sources(sources_list):
-    ‘’'
-    Function that processes the news sources and transform them into a list of objects
-    ‘’'
-    news_sources = []
-    for source_item in sources_list:
-        id = source_item.get(‘id’)
-        name = source_item.get(‘name’)
-        description = source_item.get(‘description’)
-        url = source_item.get(‘url’)
-        sources_object = Sources(id, name, description, url)
-        news_sources.append(sources_object)
-    return news_sources
+from flask import Flask,render_template
+from newsapi import NewsApiClient
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    api_key = '760f167336c24d789133ed6ce44e2dcd'
+    
+    newsapi = NewsApiClient(api_key=api_key)
+
+    top_headlines = newsapi.get_top_headlines(sources = "bbc-news")
+    all_articles = newsapi.get_everything(sources = "bbc-news")
+
+    t_articles = top_headlines['articles']
+    a_articles = all_articles['articles']
+
+    news = []
+    desc = []
+    img = []
+    p_date = []
+    url = []
+
+    for i in range (len(t_articles)):
+        main_article = t_articles[i]
+
+        news.append(main_article['title'])
+        desc.append(main_article['description'])
+        img.append(main_article['urlToImage'])
+        p_date.append(main_article['publishedAt'])
+        url.append(main_article['url'])
+
+        contents = zip( news,desc,img,p_date,url)
+
+    news_all = []
+    desc_all = []
+    img_all = []
+    p_date_all = []   
+    url_all = []
+
+    for j in range(len(a_articles)): 
+        main_all_articles = a_articles[j]   
+
+        news_all.append(main_all_articles['title'])
+        desc_all.append(main_all_articles['description'])
+        img_all.append(main_all_articles['urlToImage'])
+        p_date_all.append(main_all_articles['publishedAt'])
+        url_all.append(main_article['url'])
+        
+        all = zip( news_all,desc_all,img_all,p_date_all,url_all)
+
+    return render_template('home.html',contents=contents,all = all)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
