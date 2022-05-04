@@ -20,7 +20,7 @@ def get_articles():
             news_articles = process_articles(news_articles_list)
     return news_articles
 def process_articles(articles_list):
-        ‘’'
+    ‘’'
     Function that processes the news articles and transform them into a list of objects
     ‘’'
     news_articles = []
@@ -52,7 +52,7 @@ def get_sources():
 def process_sources(sources_list):
     ‘’'
     Function that processes the news sources and transform them into a list of objects
-               ‘’'
+    ‘’'
     news_sources = []
     for source_item in sources_list:
         id = source_item.get(‘id’)
@@ -62,3 +62,17 @@ def process_sources(sources_list):
         sources_object = Sources(id, name, description, url)
         news_sources.append(sources_object)
     return news_sources
+
+
+
+
+
+
+
+
+
+
+
+
+
+
