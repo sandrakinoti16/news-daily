@@ -1,16 +1,21 @@
 from flask import render_template
 from app import app
-from app.request import get_news
+from request import get_news_article
 
 # Views
 @app.route('/')
 def home():
+    articles = get_news_article()
+    return render_template('home.html',news=articles)
+# @app.route('/')
+# def home():
 
-    '''
-    View root page function that returns the index page and its data
-    '''
-    news_results= get_news()
-    return render_template('home.html',news=news_results)
+#     '''
+#     View root page function that returns the index page and its data
+#     '''
+#     title= "sandra"
+#     news_articles_results= get_news_article()
+#     return render_template('home.html',news=news_articles_results,title=title)
 
 @app.route('/news')
 def news():
