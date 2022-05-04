@@ -1,60 +1,57 @@
-from flask import Flask,render_template
-from newsapi import NewsApiClient
 from app import app
+import urllib.request,json
 
+from app.models.news import Articles
+from .models import articles
+
+Article = articles.Articles
 # Getting api key
 api_key = app.config['NEWS_API_KEY']
 
-app = Flask(__name__)
+# Getting the news base url
+base_articles_url = app.config["BASE_ARTICLES_URL"]
+def get_news():
+    '''
+    Function that gets the json response to our url request
+    '''
+    get_news_url = base_articles_url.format(api_key)
 
-@app.route("/")
-def home():
-    api_key = '760f167336c24d789133ed6ce44e2dcd'
+    with urllib.request.urlopen(get_news_url) as url:
+        get_news_data = url.read()
+        get_news_response = json.loads(get_news_data)
+
+        news_results = None
+
+        if get_news_response['results']:
+            news_results_list = get_news_response['results']
+            news_results = process_results(news_results_list)
+    return news_results
+            
+def process_results(news_list):
+    '''
+    Function  that processes the movie result and transform them to a list of Objects
+
+    Args:
+        news_list: A list of dictionaries that contain movie details
+
+    Returns :
+        news_results: A list of movie objects
+    '''
+    news_results = []
+    for news_item in news_list:
+        author = news_item.get('author')
+        title = news_item.get('title')
+        description= news_item.get('description')
+        url = news_item.get('url')
+        urltoImage = news_item.get('urltoImage')
+        publishedAt = news_item.get('publishedAt')
+        content = news_item.get('content')
+
+        if urltoImage:
+            article_object = Articles(author,title,description,url,urltoImage,publishedAt,content)
+            news_results.append(article_object)
+
+    return news_results
+
+
     
-    newsapi = NewsApiClient(api_key=api_key)
-
-    top_headlines = newsapi.get_top_headlines(sources = "bbc-news")
-    all_articles = newsapi.get_everything(sources = "bbc-news")
-
-    t_articles = top_headlines['articles']
-    a_articles = all_articles['articles']
-
-    news = []
-    desc = []
-    img = []
-    p_date = []
-    url = []
-
-    for i in range (len(t_articles)):
-        main_article = t_articles[i]
-
-        news.append(main_article['title'])
-        desc.append(main_article['description'])
-        img.append(main_article['urlToImage'])
-        p_date.append(main_article['publishedAt'])
-        url.append(main_article['url'])
-
-        contents = zip( news,desc,img,p_date,url)
-
-    news_all = []
-    desc_all = []
-    img_all = []
-    p_date_all = []   
-    url_all = []
-
-    for j in range(len(a_articles)): 
-        main_all_articles = a_articles[j]   
-
-        news_all.append(main_all_articles['title'])
-        desc_all.append(main_all_articles['description'])
-        img_all.append(main_all_articles['urlToImage'])
-        p_date_all.append(main_all_articles['publishedAt'])
-        url_all.append(main_article['url'])
-        
-        all = zip( news_all,desc_all,img_all,p_date_all,url_all)
-
-    return render_template('home.html',contents=contents,all = all)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
