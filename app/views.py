@@ -1,12 +1,13 @@
 from flask import render_template
 from app import app
-from request import get_news_article
+from .request import get_news_article
 
 # Views
 @app.route('/')
 def home():
     articles = get_news_article()
-    return render_template('home.html',news=articles)
+    title = 'sandra'
+    return render_template('home.html',news=articles,title=title)
 # @app.route('/')
 # def home():
 
