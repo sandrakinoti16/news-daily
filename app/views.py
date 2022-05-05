@@ -1,13 +1,14 @@
 from flask import render_template
 from app import app
-from .request import get_news_article
+from .request import get_news_article,get_sources
 
 # Views
 @app.route('/')
-def home():
+def index():
     articles = get_news_article()
+    sources = get_sources()
     title = 'sandra'
-    return render_template('home.html',news=articles,title=title)
+    return render_template('index.html',news=articles,title=title,sources=sources)
 # @app.route('/')
 # def home():
 
@@ -20,7 +21,7 @@ def home():
 
 @app.route('/news')
 def news():
-    news_article = home()
+    news_article = index()
     return render_template('news.html',news_article= news_article)
 
   

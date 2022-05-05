@@ -1,0 +1,10 @@
+{% macro displayarticles(article_list) %}
+    {% for article in article_list %}
+        <p>{{article.description}}</p>
+    {% endfor %}
+{% endmacro %}
+{% macro displaysources(sources_list) %}
+    {% for source in sources_list %}
+        <p>{{source.name}}</p>
+    {% endfor %}
+{% endmacro %}

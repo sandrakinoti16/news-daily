@@ -12,4 +12,8 @@ class Articles:
         self.urlToImage = urlToImage
         self.publishedAt = publishedAt
         self.content = content
+class source:
+    def __init__(self,name,url):
+        self.name= name
+        self.url=url
         

@@ -1,12 +1,13 @@
 from app import app
 import urllib.request,json
 
-from app.models.news import Articles
+from app.models.news import Articles,source
 # Getting api key
 api_key = app.config['NEWS_API_KEY']
 
 # Getting the news base url
 base_articles_url = app.config["BASE_ARTICLES_URL"]
+base_sources_url =app.config["BASE_SOURCES_URL"]
 
 def get_news_article():
     get_news_article_url='https://newsapi.org/v2/top-headlines?country=us&apiKey=760f167336c24d789133ed6ce44e2dcd'
@@ -35,3 +36,23 @@ def process_results(article_list):
             article_object = Articles(author,title,description,url,urlToImage,publishedAt,content)
             article_items.append(article_object)
     return article_items
+    
+def get_sources():
+    get_sources_article_url='https://newsapi.org/v2/top-headlines?sources?apiKey=760f167336c24d789133ed6ce44e2dcd'
+    with urllib.request.urlopen(get_sources_article_url) as url:
+        news_article_data = url.read()
+        news_article_response = json.loads(news_article_data)
+        articles_results = None
+        if news_article_response['sources']:
+            news_articles_dict = news_article_response['sources']
+            articles_results = process_result(news_articles_dict)
+        return articles_results
+def process_result(source_list):
+      article_items=[]
+      for article in source_list:
+        url = article.get('url')
+        name = article.get('name')
+        if name:
+          article_object = source(name,url)
+          article_items.append(article_object)
+        return article_items
