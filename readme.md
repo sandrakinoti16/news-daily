@@ -29,11 +29,11 @@ To get the code..
   ```
 4. Running the application
   ```bash
-  python3.8 manage.py server
+  python3.8 run.py server
   ```
 5. Testing the application
   ```bash
-  python3.8 manage.py test
+  python3.8 news_test.py test
   ```
 Open the application on your browser `127.0.0.1:5000`.
 
