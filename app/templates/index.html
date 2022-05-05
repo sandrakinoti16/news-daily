@@ -25,33 +25,14 @@
     <div class="banner"><img src="https://t4.ftcdn.net/jpg/03/37/92/49/360_F_337924964_fF6I0iZkv9lvoIEn71f0OsgawArIPPDu.jpg">
     </div>
     <div class = "head">TODAY'S TOP HEADLINES</div>
-    <div>{{macro.displayarticles(news)}}</div>
-    <div>{{macro.displaysources(sources)}}</div>
+    <div class="articles">{{macro.displayarticles(news)}}</div>
+    <div class="sources">{{macro.displaysources(sources)}}</div>
     <p>{{title}}</p>
     {% for article in news%}
      <p>{{article.title}}</p>
     {% endfor %}
 
-    <!-- <div class=“col-xs-12 col-sm-4 col-md-2 col-lg-2 news-card”>
-        {% for news_article in news %}
-        <div class="card">
-            <div class="card-title">
-                <h3>{{news_article.title}}</h3>
-                <h1> hi</h1>
-            </div>
-            <div class="card-body">
-                <img src="{{news_article.urltoImage}}">
-                <h5>{{news_article.author}}</h5>
-                <p>{{news_article.description}}</p>
-            </div>
-            <div class="card-footer">
-                <p>{{news_article.publishedAt}}</p>
-                <a href="{{news_article.url}}">view article</a>
-            </div>
-        </div>
-        {% endfor %}
-    </div> -->
-    
+
     
     <div class = "head">TODAY'S NEWS</div>
     
